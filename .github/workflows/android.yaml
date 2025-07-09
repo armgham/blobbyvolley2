@@ -56,3 +56,11 @@ jobs:
       - name: Build
         run: |
           cmake --build .
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: android-native-libs
+          path: |
+            **/*.so
+            build/
+          retention-days: 5
