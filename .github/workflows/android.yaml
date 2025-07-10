@@ -12,7 +12,7 @@ jobs:
   Build:
     runs-on: ubuntu-latest
     env:
-      ABI: armeabi-v7a
+      ABI: arm64-v8a
     steps:
       - name: Setup Linux
         run: |
@@ -31,7 +31,7 @@ jobs:
         run: |
           git clone -b release-2.32.x https://github.com/libsdl-org/SDL.git SDL2
           mkdir SDL2-build
-          cmake --toolchain="${TOOLCHAIN}" -S SDL2 -B SDL2-build
+          cmake --toolchain="${TOOLCHAIN}" -DANDROID_ABI=$ABI -S SDL2 -B SDL2-build
           cmake --build SDL2-build
           cmake --install SDL2-build --prefix "$(pwd)/built-deps"
 
@@ -39,7 +39,7 @@ jobs:
         run: | 
           git clone https://github.com/icculus/physfs.git physfs
           mkdir physfs-build
-          cmake --toolchain="${TOOLCHAIN}" -S physfs -B physfs-build
+          cmake --toolchain="${TOOLCHAIN}" -DANDROID_ABI=$ABI -S physfs -B physfs-build
           cmake --build physfs-build
           cmake --install physfs-build --prefix "$(pwd)/built-deps"
 
